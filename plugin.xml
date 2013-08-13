@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://cordova.apache.org/ns/plugins/1.0"
+           id="org.apache.cordova.core.FileOpener"
+      version="0.1.0">
+    <name>FileOpener</name>
+    <description>Cordova FileOpener Plugin</description>
+    <license>Apache</license>
+    <keywords>cordova,in,app,browser,FileOpener</keywords>
+
+    <js-module src="www/fileopener.js" name="FileOpener">
+        <clobbers target="window.open" />
+    </js-module>
+    
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="FileOpener"> 
+                <param name="android-package" value="org.apache.cordova.core.FileOpener"/>
+            </feature>
+        </config-file>
+
+        <source-file src="src/android/FileOpener.java" target-dir="src/org/apache/cordova/core" />
+    </platform>
+
+</plugin>
