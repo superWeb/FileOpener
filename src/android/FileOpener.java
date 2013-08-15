@@ -1,48 +1,33 @@
-/*
- * PhoneGap is available under *either* the terms of the modified BSD license *or* the
- * MIT License (2008). See http://opensource.org/licenses/alphabetical for full text.
- *
- * Copyright (c) 2005-2010, Nitobi Software Inc.
- * Copyright (c) 2011, IBM Corporation
- */
+package org.apache.cordova.plugins;
 
-package com.phonegap.plugins.fileopener;
-
-import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 
+import org.apache.cordova.CallbackContext;
+import org.apache.cordova.CordovaPlugin;
+import org.apache.cordova.PluginResult;
 import org.json.JSONArray;
 import org.json.JSONException;
+import org.json.JSONObject;
 
-import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 
-import org.apache.cordova.api.Plugin;
-import org.apache.cordova.api.PluginResult;
-
-public class FileOpener extends Plugin {
-
+/**
+ * This class trys to open the file with the given filepath.
+ */
+public class FileOpener extends CordovaPlugin {
     @Override
-    public PluginResult execute(String action, JSONArray args, String callbackId) {
-        PluginResult.Status status = PluginResult.Status.OK;
-        String result = "";
-
-        try {
-            if (action.equals("openFile")) {
-                openFile(args.getString(0));
-            }
-            else {
-                status = PluginResult.Status.INVALID_ACTION;
-            }
-            return new PluginResult(status, result);
-        } catch (JSONException e) {
-            return new PluginResult(PluginResult.Status.JSON_EXCEPTION);
-        } catch (IOException e) {
-            return new PluginResult(PluginResult.Status.IO_EXCEPTION);
+    public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
+        if (action.equals("openFile")) {
+        	try {
+				openFile(args.getString(0));
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+            return true;
         }
+        return false;
     }
 
     private void openFile(String url) throws IOException {
@@ -109,5 +94,4 @@ public class FileOpener extends Plugin {
 
         this.cordova.getActivity().startActivity(intent);
     }
-
 }
